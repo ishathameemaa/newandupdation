@@ -1,5 +1,5 @@
-const News = require('../model/newsModel.js')
-const dbConnect = require("../lib/dbConnect.js");
+const News = require('../../model/newsModel.js')
+const dbConnect = require("../../lib/dbConnect.js");
 
 export default async function handler(req, res) {
   await dbConnect();
