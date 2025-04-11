@@ -1,8 +1,9 @@
 const News = require("../model/newsModel");
 const dbConnect = require("../lib/dbConnect");
-//creating for  news items
-module.exports = async (req, res) => {
+
+export default async function handler(req, res) {
   await dbConnect();
+
   if (req.method === "POST") {
     try {
       const news = new News(req.body);
@@ -21,7 +22,9 @@ module.exports = async (req, res) => {
       return res.status(500).json({ message: "Error fetching news", error });
     }
   }
+
   if (req.method === "PUT") {
+    const { id } = req.query;  // Very Important for Next.js API Route
     try {
       const updatedNews = await News.findByIdAndUpdate(id, req.body, {
         new: true,
@@ -37,6 +40,7 @@ module.exports = async (req, res) => {
   }
 
   if (req.method === "DELETE") {
+    const { id } = req.query;  // Very Important for Next.js API Route
     try {
       const deletedNews = await News.findByIdAndDelete(id);
       if (!deletedNews) {
@@ -49,4 +53,4 @@ module.exports = async (req, res) => {
   }
 
   return res.status(405).json({ error: "Method Not Allowed" });
-};
+}
